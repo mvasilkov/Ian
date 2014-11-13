@@ -6,6 +6,7 @@
 
 #include "Hacks.h"
 #include "NotepadWin.h"
+#include "Util.h"
 
 using namespace std;
 using MBIcon = QSystemTrayIcon;
@@ -30,6 +31,15 @@ int main(int argc, char *argv[])
         {
                 qCritical("Catastrophic error: "
                           "could not init_menu_bar_icon()");
+                return 1;
+        }
+
+        qDebug("Initializing storage: %s", qPrintable(get_docs_dir()));
+
+        if (ensure_docs_dir())
+        {
+                qCritical("Total disaster: "
+                          "could not ensure_docs_dir()");
                 return 1;
         }
 
