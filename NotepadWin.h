@@ -7,4 +7,10 @@ class NotepadWin: public QMainWindow {
 
 public:
         NotepadWin();
+
+signals:
+        void closed();
+
+protected:
+        void closeEvent(QCloseEvent *) override;
 };
