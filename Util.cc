@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 
 #include "Util.h"
+#include "Hacks.h"
 
 using namespace std;
 
@@ -38,7 +39,7 @@ int ensure_docs_dir()
                make_dir(dir.toLocal8Bit().constData());
 }
 
-shared_ptr<QString> fmt_doc_path(const char *name)
+unique_ptr<QString> fmt_doc_path(const char *name)
 {
         if (!name)
         {
@@ -50,7 +51,7 @@ shared_ptr<QString> fmt_doc_path(const char *name)
                 name = new_name;
         }
 
-        auto path = make_shared<QString>(get_docs_dir());
+        auto path = _make_unique<QString>(get_docs_dir());
         (*path).append('/').append(name).append(".md");
-        return path;
+        return move(path);
 }

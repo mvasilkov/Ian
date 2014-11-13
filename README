@@ -4,3 +4,4 @@ Ian ("I accidentally notepad")
 Requirements:
 - qt5
 - libbson
+- libwebsockets

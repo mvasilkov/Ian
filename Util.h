@@ -12,4 +12,4 @@ enum bad_things
 
 QString &get_docs_dir();
 int ensure_docs_dir();
-std::shared_ptr<QString> fmt_doc_path(const char *);
+std::unique_ptr<QString> fmt_doc_path(const char *);

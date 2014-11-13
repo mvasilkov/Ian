@@ -20,5 +20,5 @@ protected:
         void closeEvent(QCloseEvent *) override;
 
 private:
-        std::shared_ptr<QString> doc_path;
+        std::unique_ptr<QString> doc_path;
 };
