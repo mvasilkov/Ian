@@ -1,10 +1,11 @@
+#include <bson.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 
-#include <QString>
-
 #include "Util.h"
+
+using namespace std;
 
 static int make_dir(const char *path)
 {
@@ -35,4 +36,21 @@ int ensure_docs_dir()
         QString &dir = get_docs_dir();
         return dir.isNull()? baww_no_HOME:
                make_dir(dir.toLocal8Bit().constData());
+}
+
+shared_ptr<QString> fmt_doc_path(const char *name)
+{
+        if (!name)
+        {
+                bson_oid_t objectid;
+                char new_name[25];
+
+                bson_oid_init(&objectid, nullptr);
+                bson_oid_to_string(&objectid, new_name);
+                name = new_name;
+        }
+
+        auto path = make_shared<QString>(get_docs_dir());
+        (*path).append('/').append(name).append(".md");
+        return path;
 }
