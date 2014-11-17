@@ -21,4 +21,5 @@ protected:
 
 private:
         std::unique_ptr<QString> doc_path;
+        Q_INVOKABLE void init();
 };

@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QMetaObject>
 
 #include "NotepadWin.h"
 #include "Util.h"
@@ -9,6 +10,11 @@ NotepadWin::NotepadWin(const char *name): QMainWindow(nullptr)
         doc_path = fmt_doc_path(name);
         qDebug("Make NotepadWin: %s", qPrintable(*doc_path));
 
+        QMetaObject::invokeMethod(this, "init", Qt::QueuedConnection);
+}
+
+void NotepadWin::init()
+{
         setAttribute(Qt::WA_DeleteOnClose);
         setWindowTitle("Ian");
 
