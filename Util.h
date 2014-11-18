@@ -10,6 +10,6 @@ enum bad_things
         baww_no_HOME
 };
 
-QString &get_docs_dir();
+const QString &get_docs_dir();
 int ensure_docs_dir();
 std::unique_ptr<QString> fmt_doc_path(const char *);

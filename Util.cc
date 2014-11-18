@@ -20,7 +20,7 @@ static int make_dir(const char *path)
 
 static QString docs_dir;
 
-QString &get_docs_dir()
+const QString &get_docs_dir()
 {
         if (docs_dir.isNull())
         {
@@ -34,7 +34,7 @@ QString &get_docs_dir()
 
 int ensure_docs_dir()
 {
-        QString &dir = get_docs_dir();
+        const QString &dir = get_docs_dir();
         return dir.isNull()? baww_no_HOME:
                make_dir(dir.toLocal8Bit().constData());
 }

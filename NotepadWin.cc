@@ -4,6 +4,7 @@
 
 #include "NotepadWin.h"
 #include "Util.h"
+#include "Hacks.h"
 
 NotepadWin::NotepadWin(const char *name): QMainWindow(nullptr)
 {
@@ -23,6 +24,11 @@ void NotepadWin::init()
         const int top = rekt.height() * 0.3333;
         setGeometry(left, top, left, top);
 
+        editor = make_unique_noargs<QTextEdit>();
+        editor->setAcceptRichText(false);
+        editor->installEventFilter(this);
+        setCentralWidget(editor.get());
+
         show();
 }
 
@@ -35,4 +41,11 @@ void NotepadWin::closeEvent(QCloseEvent *event)
 {
         emit closed();
         event->accept();
+}
+
+bool NotepadWin::eventFilter(QObject *target, QEvent *event)
+{
+        if (target != editor.get())
+                return super::eventFilter(target, event);
+        return false;
 }
