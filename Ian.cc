@@ -7,6 +7,7 @@
 #include "Hacks.h"
 #include "NotepadWin.h"
 #include "Util.h"
+#include "Http/Ui.h"
 
 using namespace std;
 using MBIcon = QSystemTrayIcon;
@@ -49,7 +50,7 @@ int main(int argc, char *argv[])
         {
                 win.emplace_front(make_unique_noargs<NotepadWin>());
 
-                auto &w = win.front();
+                auto& w = win.front();
 
                 QObject::connect(w.get(), &NotepadWin::closed, [&]
                 {
@@ -57,5 +58,20 @@ int main(int argc, char *argv[])
                 });
         });
 
-        return app.exec();
+        const int ui_port = 9096;
+        qDebug("Giving rise to the HTTP server on port %d", ui_port);
+
+        if (start_http_ui(ui_port))
+        {
+                qCritical("Fuck this thing in particular: "
+                          "could not start_http_ui()");
+                return 1;
+        }
+
+        int ret = app.exec();
+
+        qDebug("Laying waste to the HTTP server");
+        stop_http_ui();
+
+        return ret;
 }
